@@ -1,0 +1,32 @@
+name: Validate Lesson
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout student code
+        uses: actions/checkout@v3
+
+      - name: Get test binary
+        run: |
+          curl -o test_binary.tar.gz https://test-binary.codeling.dev/cicd_test_binary.tar.gz
+          tar xzf test_binary.tar.gz
+          chmod +x main
+
+      - name: Setup test binary
+        run: ./main -command setup
+
+      - name: Setup Python
+        if: ${{ env.COURSE_VARIANT_CODE == 'python' }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Run tests
+        run: ./main -command test
