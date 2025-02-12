@@ -15,12 +15,12 @@ jobs:
 
       - name: Get test binary
         run: |
-          curl -o test_binary.tar.gz https://test-binary.codeling.dev/cicd_test_binary.tar.gz
-          tar xzf test_binary.tar.gz
-          chmod +x test_binary
+          curl -o cicd_test_binary.tar.gz https://test-binary.codeling.dev/cicd_test_binary.tar.gz
+          tar xzf cicd_test_binary.tar.gz
+          chmod +x cicd_test_binary
 
       - name: Setup test binary
-        run: ./test_binary -command setup
+        run: ./cicd_test_binary -command setup
 
       - name: Setup Python
         if: ${{ env.COURSE_VARIANT_CODE == 'python' }}
@@ -29,4 +29,4 @@ jobs:
           python-version: '3.13'
 
       - name: Run tests
-        run: ./test_binary -command test
+        run: ./cicd_test_binary -command test
