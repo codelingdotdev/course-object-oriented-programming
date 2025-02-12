@@ -3,7 +3,7 @@ name: Validate Lesson
 on:
   push:
     branches:
-      - staging
+      - main
 
 jobs:
   validate:
